@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     private TextMeshProUGUI scoreText;
 
     [SerializeField]
+    private GameObject stateManager;
+
+    [SerializeField]
     private GameObject explosionEffect;
 
     // Start is called before the first frame update
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = 100;
         healthBar.SetMaxHealth(100);
         playerScore = 0;
+				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
         scoreText.text = playerScore.ToString();
     }
 
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddScore() {
         playerScore += 10;
+				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
         scoreText.text = playerScore.ToString();
     }
 
