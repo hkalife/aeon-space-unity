@@ -126,35 +126,19 @@ public class APIController : MonoBehaviour
     StartCoroutine(UpdateScoreInChampionship());
   }
 
-  IEnumerator UpdateScoreInChampionship() {
-    /*WWWForm form = new WWWForm();
-    for (int i = 0; i < listChampionships.Length; i++) {
-      if(listChampionships[i].ChampionshipName == dropdownChampionships.options[dropdownChampionships.value].text) {
-        form.AddField("score", 666);
-        form.AddField("user_id", userId);
-        championshipIdForRequest = listChampionships[i].Id;
+  IEnumerator UpdateScoreInChampionship() {    
+    List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+
+    string championshipId = "";
+    foreach (var championship in listChampionships) {
+      if (championship.ChampionshipName == dropdownChampionships.options[dropdownChampionships.value].text) {
+        championshipId = championship.Id;
       }
     }
 
-    string infoScoreURL = baseURL + "/championships/updateplayerscore/" + championshipIdForRequest;
+    string url = "http://localhost:3000/championships/updateplayerscore/"+ championshipId + "&" + userId + "&" + 321;
 
-    Debug.Log(infoScoreURL);
-    Debug.Log(form.data);
-
-    UnityWebRequest www = UnityWebRequest.Put(infoScoreURL, form.data);
-
-    yield return www.SendWebRequest();
-
-    if (www.isNetworkError || www.isHttpError) {
-      Debug.LogError(www.error);
-      yield break;
-    } */
-    
-    List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-    formData.Add(new MultipartFormDataSection("field1=foo&field2=bar"));
-    formData.Add(new MultipartFormFileSection("my file data", "myfile.txt"));
-
-    UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/championships/updateplayerscore/jmOtgaf9q8qiiAreB0mn", formData);
+    UnityWebRequest www = UnityWebRequest.Post(url, formData);
     yield return www.SendWebRequest();
 
     if (www.isNetworkError || www.isHttpError) {
