@@ -123,7 +123,8 @@ public class APIController : MonoBehaviour
   }
 
   public void SendGameInfo() {
-    StartCoroutine(UpdateScoreInChampionship());
+    //StartCoroutine(UpdateScoreInChampionship());
+    StartCoroutine(UpdateScoreInUser());
   }
 
   IEnumerator UpdateScoreInChampionship() {    
@@ -136,7 +137,28 @@ public class APIController : MonoBehaviour
       }
     }
 
-    string url = "http://localhost:3000/championships/updateplayerscore/"+ championshipId + "&" + userId + "&" + 321;
+    string url = "http://localhost:3000/championships/updatechampionshipscore/"+ championshipId + "&" + userId + "&" + 321;
+
+    UnityWebRequest www = UnityWebRequest.Post(url, formData);
+    yield return www.SendWebRequest();
+
+    if (www.isNetworkError || www.isHttpError) {
+      Debug.LogError(www.error);
+      yield break;
+    }
+  }
+
+  IEnumerator UpdateScoreInUser() {
+    List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+
+    string championshipId = "";
+    foreach (var championship in listChampionships) {
+      if (championship.ChampionshipName == dropdownChampionships.options[dropdownChampionships.value].text) {
+        championshipId = championship.Id;
+      }
+    }
+
+    string url = "http://localhost:3000/users/updateplayerscore/"+ championshipId + "&" + userId + "&" + 100 + "&" + "deathmatch" + "&" + "space";
 
     UnityWebRequest www = UnityWebRequest.Post(url, formData);
     yield return www.SendWebRequest();
