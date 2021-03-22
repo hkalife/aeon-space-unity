@@ -11,7 +11,7 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private string currentScenario;
 
-  private string[] scenarios = {"Space", "Desert", "Ocean"};
+  private string[] scenarios = {"Space", "Desert", "Ice"};
 
   [SerializeField]
   private Material spaceSkyboxMaterial;
@@ -20,7 +20,16 @@ public class CurrentState : MonoBehaviour
   private Material desertSkyboxMaterial;
   
   [SerializeField]
-  private Material oceanSkyboxMaterial;
+  private Material iceSkyboxMaterial;
+
+  [SerializeField]
+  private GameObject spaceScenario;
+  
+  [SerializeField]
+  private GameObject desertScenario;
+  
+  [SerializeField]
+  private GameObject iceScenario;
 
   void Start() {
     DefineScenario();
@@ -28,17 +37,28 @@ public class CurrentState : MonoBehaviour
   }
 
   void DefineScenario() {
+    // Debug.Log(scenarios.Length);
     currentScenario = scenarios[Random.Range(0, scenarios.Length)];
+    Debug.Log(currentScenario);
     MountScene(currentScenario);
   }
 
   void MountScene(string scenario) {
     if (scenario == "Space") {
       RenderSettings.skybox = spaceSkyboxMaterial;
+      spaceScenario.SetActive(true);
+      desertScenario.SetActive(false);
+      iceScenario.SetActive(false);
     } else if (scenario == "Desert") {
       RenderSettings.skybox = desertSkyboxMaterial;
-    } else if (scenario == "Ocean") {
-      RenderSettings.skybox = oceanSkyboxMaterial;
+      spaceScenario.SetActive(false);
+      desertScenario.SetActive(true);
+      iceScenario.SetActive(false);
+    } else if (scenario == "Ice") {
+      RenderSettings.skybox = iceSkyboxMaterial;
+      spaceScenario.SetActive(false);
+      desertScenario.SetActive(false);
+      iceScenario.SetActive(true);
     }
   }
 
