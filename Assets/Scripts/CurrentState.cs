@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CurrentState : MonoBehaviour
 {
@@ -11,7 +12,15 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private string currentScenario;
 
+  [SerializeField]
+  private bool gameStarted;
+
   private string[] scenarios = {"Space", "Desert", "Ice"};
+
+  [SerializeField]
+  private string currentObjective = "Deathmatch";
+
+  private string[] objectives = {"Deathmatch", "Assets", "Base"};
 
   [SerializeField]
   private Material spaceSkyboxMaterial;
@@ -31,15 +40,25 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private GameObject iceScenario;
 
+  [SerializeField]
+  private GameObject enemy;
+
+  [SerializeField]
+  private TMP_Text clockText;
+
+  private int minutes = 2;
+
+  private int seconds = 59;
+
   void Start() {
+    gameStarted = true;
     DefineScenario();
     DefineObjective();
+    StartCoroutine(Countdown());
   }
 
   void DefineScenario() {
-    // Debug.Log(scenarios.Length);
     currentScenario = scenarios[Random.Range(0, scenarios.Length)];
-    Debug.Log(currentScenario);
     MountScene(currentScenario);
   }
 
@@ -63,7 +82,19 @@ public class CurrentState : MonoBehaviour
   }
 
   void DefineObjective() {
+    //currentObjective = scenarios[Random.Range(0, objectives.Length)];
+    MountRandomObjectives(currentObjective);
+  }
 
+  void MountRandomObjectives(string currentObjective) {
+    /*if (currentObjective == "Deathmatch") {
+      CreateDeathmatchObjective();
+    } else if (currentObjective == "Assets") {
+      CreateAssetObjective();
+    } else if (currentObjective == "Base") {
+      CreateBaseObjective();
+    }*/
+    CreateDeathmatchObjective();
   }
 
   public void SetScore(int newScore) {
@@ -74,4 +105,39 @@ public class CurrentState : MonoBehaviour
     return score;
   }
 
+  void CreateAssetObjective() {
+    clockText.text = "";
+  }
+
+  void CreateBaseObjective() {
+    clockText.text = "";
+  }
+
+  void CreateDeathmatchObjective() {
+    clockText.text = "";
+    for (int i = 0; i < 50 ; i++) {
+      Vector3 newEnemyPosition = new Vector3(Random.Range(-680.0f, 4700.0f), Random.Range(250.0f, 600.0f), Random.Range(124.0f, 4200.0f));
+      Quaternion newEnemyRotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), Random.Range(-30.0f, 30.0f));
+      GameObject newEnemy = Instantiate(enemy, newEnemyPosition, newEnemyRotation);
+      newEnemy.SetActive(true);
+    }
+  }
+
+  IEnumerator Countdown()
+  {
+    while (seconds > 0 && minutes > 0) {
+      if (seconds > 0) {
+        seconds--;
+      } else {
+        seconds = 59;
+        minutes--;
+      }
+      string secondsToShow = seconds.ToString();
+      if (seconds < 10) {
+        secondsToShow = "0" + seconds.ToString();
+      }
+      clockText.text = "0" + minutes.ToString() + ":" + secondsToShow;
+      yield return new WaitForSeconds(1f);
+    }
+  }
 }

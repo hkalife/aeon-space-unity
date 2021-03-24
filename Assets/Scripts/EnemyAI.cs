@@ -100,6 +100,7 @@ public class EnemyAI : MonoBehaviour
         switch(state) {
             default:
             case State.Stop:
+                IdleMovement();
                 break;
             case State.ChasePlayer:
                 ChasePlayer();
@@ -120,6 +121,10 @@ public class EnemyAI : MonoBehaviour
 
     public void DamageForEnemy() {
         enemyHealth -= 50;
+    }
+
+    public void IdleMovement() {
+        transform.position += transform.forward * 30.0f * Time.deltaTime;
     }
 
     public void CheckLife() {
