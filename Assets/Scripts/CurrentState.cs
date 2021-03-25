@@ -46,6 +46,12 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private TMP_Text clockText;
 
+  [SerializeField]
+  private TMP_Text objectiveTextTitle;
+
+  [SerializeField]
+  private TMP_Text objectiveTextSubTitle;
+
   private int minutes = 2;
 
   private int seconds = 59;
@@ -82,8 +88,28 @@ public class CurrentState : MonoBehaviour
   }
 
   void DefineObjective() {
-    //currentObjective = scenarios[Random.Range(0, objectives.Length)];
+    currentObjective = objectives[Random.Range(0, objectives.Length)];
+    StartCoroutine(DefineTextForScreen(currentObjective));
     MountRandomObjectives(currentObjective);
+  }
+
+  IEnumerator DefineTextForScreen(string objective) {
+    Debug.Log("ma oeeee");
+    if (objective == "Deathmatch") {
+      objectiveTextTitle.text = "Modo: Batalha";
+      objectiveTextSubTitle.text = "Elimine o máximo de naves inimigas até o tempo acabar";
+    } else if (objective == "Assets") {
+      objectiveTextTitle.text = "Modo: Recursos";
+      objectiveTextSubTitle.text = "Colete todos os recursos sem morrer";
+    } else if (objective == "Base") {
+      objectiveTextTitle.text = "Modo: Base Inimiga";
+      objectiveTextSubTitle.text = "Elimine as bases inimigas";
+    }
+
+    yield return new WaitForSeconds(3f);
+
+    objectiveTextTitle.text = "";
+    objectiveTextSubTitle.text = "";
   }
 
   void MountRandomObjectives(string currentObjective) {
