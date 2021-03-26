@@ -18,7 +18,7 @@ public class StationAI : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-      stationHealth = 200;
+      stationHealth = 2;
       player = GameObject.Find("Player Ship");
       state = GameObject.Find("StateManager");
       canvas = GameObject.Find("Canvas");

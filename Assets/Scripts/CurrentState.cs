@@ -56,6 +56,12 @@ public class CurrentState : MonoBehaviour
   private TMP_Text scoreText;
 
   [SerializeField]
+  private TMP_Text remainingBases;
+
+  [SerializeField]
+  private TMP_Text titleRemainingBases;
+
+  [SerializeField]
   private GameObject scoreScreen;
 
   [SerializeField]
@@ -72,10 +78,10 @@ public class CurrentState : MonoBehaviour
   }
 
   void Update() {
-    /*if (currentObjective == "Base" && remainingStations == 0) {
-      gameFinished = true;
-      // scoreScreen.SetActive(true);
-    }*/
+    if (currentObjective == "Base") {
+      titleRemainingBases.text = "Restando";
+      remainingBases.text = remainingStations.ToString();
+    }
   }
 
   void DefineScenario() {
@@ -104,6 +110,7 @@ public class CurrentState : MonoBehaviour
 
   void DefineObjective() {
     currentObjective = objectives[Random.Range(0, objectives.Length)];
+    currentObjective = "Base";
     StartCoroutine(DefineTextForScreen(currentObjective));
     MountRandomObjectives(currentObjective);
   }
@@ -129,14 +136,11 @@ public class CurrentState : MonoBehaviour
   void MountRandomObjectives(string currentObjective) {
     if (currentObjective == "Deathmatch") {
       CreateDeathmatchObjective();
-    } /*else if (currentObjective == "Assets") {
+    } else if (currentObjective == "Assets") {
       CreateAssetObjective();
-    } */else if (currentObjective == "Base") {
+    } else if (currentObjective == "Base") {
       CreateBaseObjective();
     }
-    //CreateDeathmatchObjective();
-    //CreateBaseObjective();
-    //CreateAssetObjective();
   }
 
   public void SetScore(int newScore) {
@@ -150,6 +154,8 @@ public class CurrentState : MonoBehaviour
 
   void CreateAssetObjective() {
     clockText.text = "";
+    titleRemainingBases.text = "";
+    remainingBases.text = "";
   }
 
   void CreateBaseObjective() {
@@ -186,6 +192,8 @@ public class CurrentState : MonoBehaviour
 
   void CreateDeathmatchObjective() {
     clockText.text = "";
+    titleRemainingBases.text = "";
+    remainingBases.text = "";
     GenerateEnemies(50);
     StartCoroutine(Countdown());
   }
