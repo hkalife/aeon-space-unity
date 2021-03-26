@@ -7,6 +7,7 @@ TagManager:
   - Laser
   - Target
   - Enemy
+  - Station
   layers:
   - Default
   - TransparentFX

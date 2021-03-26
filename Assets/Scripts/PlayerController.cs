@@ -109,6 +109,12 @@ public class PlayerController : MonoBehaviour
         scoreText.text = playerScore.ToString();
     }
 
+    public void AddStationScore() {
+        playerScore += 100;
+				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
+        scoreText.text = playerScore.ToString();
+    }
+
     public void CheckLife() {
         if (playerHealth <= 0) {
             GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);

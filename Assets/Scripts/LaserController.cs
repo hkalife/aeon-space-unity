@@ -7,6 +7,7 @@ public class LaserController : MonoBehaviour
 
     private GameObject player;
     private GameObject enemy;
+    private GameObject station;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class LaserController : MonoBehaviour
         Destroy(gameObject, 5);
         player = GameObject.Find("Player Ship");
         enemy = GameObject.Find("Enemy");
+        station = GameObject.Find("Station");
     }
 
     // Update is called once per frame
@@ -37,6 +39,10 @@ public class LaserController : MonoBehaviour
         } else if (player != null && tagObject == "Player") {
             PlayerController scriptPlayer = player.GetComponent<PlayerController>();
             scriptPlayer.DamageForPlayer();
+        } else if (tagObject == "Station") {
+            GameObject parent = col.gameObject.transform.parent.gameObject;
+            StationAI scriptStation = parent.gameObject.GetComponent<StationAI>();
+            scriptStation.StationTakeDamage("Laser");
         }
     }
 

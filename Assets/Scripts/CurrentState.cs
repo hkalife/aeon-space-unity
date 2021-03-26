@@ -10,6 +10,8 @@ public class CurrentState : MonoBehaviour
 
   public bool gameFinished;
 
+  public int remainingStations;
+
   [SerializeField]
   private string currentScenario;
 
@@ -59,14 +61,21 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private GameObject station;
 
-  private int minutes = 0;
+  private int minutes = 2;
 
-  private int seconds = 10;
+  private int seconds = 59;
 
   void Start() {
     gameFinished = false;
     DefineScenario();
     DefineObjective();
+  }
+
+  void Update() {
+    /*if (currentObjective == "Base" && remainingStations == 0) {
+      gameFinished = true;
+      // scoreScreen.SetActive(true);
+    }*/
   }
 
   void DefineScenario() {
@@ -118,15 +127,15 @@ public class CurrentState : MonoBehaviour
   }
 
   void MountRandomObjectives(string currentObjective) {
-    /*if (currentObjective == "Deathmatch") {
+    if (currentObjective == "Deathmatch") {
       CreateDeathmatchObjective();
-    } else if (currentObjective == "Assets") {
+    } /*else if (currentObjective == "Assets") {
       CreateAssetObjective();
-    } else if (currentObjective == "Base") {
+    } */else if (currentObjective == "Base") {
       CreateBaseObjective();
-    }*/
+    }
     //CreateDeathmatchObjective();
-    CreateBaseObjective();
+    //CreateBaseObjective();
     //CreateAssetObjective();
   }
 
@@ -146,6 +155,7 @@ public class CurrentState : MonoBehaviour
   void CreateBaseObjective() {
     clockText.text = "";
 
+    remainingStations = 3;
     for (int i = 0; i <= 2; i++) {
       Quaternion stationRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
@@ -162,7 +172,7 @@ public class CurrentState : MonoBehaviour
       newStation.SetActive(true);
     }
 
-    GenerateEnemies(25);
+    //GenerateEnemies(25);
   }
 
   void GenerateEnemies(int amountOfEnemies) {
