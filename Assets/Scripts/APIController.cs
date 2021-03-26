@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class APIController : MonoBehaviour
 {
@@ -22,8 +22,14 @@ public class APIController : MonoBehaviour
   [SerializeField]
   private GameObject scoreScreen;
 
+  //[SerializeField]
+  //private TMP_Text scoreText;
+
   [SerializeField]
   private GameObject sendScreen;
+
+  //[SerializeField]
+  //private GameObject stateManager;
 
   private string userId;
 
@@ -96,6 +102,7 @@ public class APIController : MonoBehaviour
 
   void Start() {
     StartCoroutine(GetCurrentUser("henriquekalife@gmail.com"));
+    //scoreScreen.SetActive(false);
   }
 
   // Update is called once per frame
@@ -106,6 +113,11 @@ public class APIController : MonoBehaviour
     } */
     // Debug.Log(dropdownChampionships.value);
     // Debug.Log(dropdownChampionships.options[dropdownChampionships.value].text);
+
+    /*if (stateManager.GetComponent<CurrentState>().gameFinished) {
+      GoToScreen(1);
+      scoreText.text = stateManager.GetComponent<CurrentState>().score.ToString();
+    }*/
   }
 
   public void HandleInputData(int val) {
