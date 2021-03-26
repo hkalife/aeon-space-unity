@@ -26,7 +26,7 @@ public class StationAI : MonoBehaviour
 
   public void StationTakeDamage(string origin) {
     if (origin == "Laser") {
-      stationHealth -= 1;
+      stationHealth -= 200;
     }
   }
 

@@ -178,7 +178,7 @@ public class CurrentState : MonoBehaviour
       newStation.SetActive(true);
     }
 
-    //GenerateEnemies(25);
+    GenerateEnemies(25);
   }
 
   void GenerateEnemies(int amountOfEnemies) {
