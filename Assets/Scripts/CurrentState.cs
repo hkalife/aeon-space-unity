@@ -12,6 +12,10 @@ public class CurrentState : MonoBehaviour
 
   public int remainingStations;
 
+  public int remainingAssets;
+
+  public GameObject scoreScreen;
+
   [SerializeField]
   private string currentScenario;
 
@@ -56,16 +60,16 @@ public class CurrentState : MonoBehaviour
   private TMP_Text scoreText;
 
   [SerializeField]
-  private TMP_Text remainingBases;
+  private TMP_Text remainingNumber;
 
   [SerializeField]
-  private TMP_Text titleRemainingBases;
-
-  [SerializeField]
-  private GameObject scoreScreen;
+  private TMP_Text titleRemainingNumber;
 
   [SerializeField]
   private GameObject station;
+
+  [SerializeField]
+  private GameObject assetItem;
 
   private int minutes = 2;
 
@@ -79,8 +83,12 @@ public class CurrentState : MonoBehaviour
 
   void Update() {
     if (currentObjective == "Base") {
-      titleRemainingBases.text = "Restando";
-      remainingBases.text = remainingStations.ToString();
+      titleRemainingNumber.text = "Restando";
+      remainingNumber.text = remainingStations.ToString();
+    }
+    if (currentObjective == "Assets") {
+      titleRemainingNumber.text = "Restando";
+      remainingNumber.text = remainingAssets.ToString();
     }
   }
 
@@ -110,7 +118,7 @@ public class CurrentState : MonoBehaviour
 
   void DefineObjective() {
     currentObjective = objectives[Random.Range(0, objectives.Length)];
-    currentObjective = "Base";
+    //currentObjective = "Assets";
     StartCoroutine(DefineTextForScreen(currentObjective));
     MountRandomObjectives(currentObjective);
   }
@@ -154,8 +162,12 @@ public class CurrentState : MonoBehaviour
 
   void CreateAssetObjective() {
     clockText.text = "";
-    titleRemainingBases.text = "";
-    remainingBases.text = "";
+    remainingAssets = 10;
+    for (int i = 0; i <= 9; i++) {
+      Quaternion stationRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+      Vector3 stationPosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(400.0f, 500.0f), Random.Range(745.0f, 4150.0f));
+      GameObject newAsset = Instantiate(assetItem, stationPosition, stationRotation);
+    }
   }
 
   void CreateBaseObjective() {
@@ -192,8 +204,8 @@ public class CurrentState : MonoBehaviour
 
   void CreateDeathmatchObjective() {
     clockText.text = "";
-    titleRemainingBases.text = "";
-    remainingBases.text = "";
+    titleRemainingNumber.text = "";
+    remainingNumber.text = "";
     GenerateEnemies(50);
     StartCoroutine(Countdown());
   }
