@@ -16,6 +16,9 @@ public class MainMenu : MonoBehaviour
   [SerializeField]
   private GameObject thirdMenu;
 
+  [SerializeField]
+  private GameObject controlMenu;
+
   public TMP_Text warningLoginText;
 
   public TMP_Text userMessage;
@@ -52,18 +55,29 @@ public class MainMenu : MonoBehaviour
     firstMenu.SetActive(true);
     secondMenu.SetActive(false);
     thirdMenu.SetActive(false);
+    controlMenu.SetActive(false);
   }
 
   public void GoToSecondMenu() {
     firstMenu.SetActive(false);
     secondMenu.SetActive(true);
     thirdMenu.SetActive(false);
+    controlMenu.SetActive(false);
   }
 
   public void GoToThirdMenu() {
     firstMenu.SetActive(false);
     secondMenu.SetActive(false);
     thirdMenu.SetActive(true);
+    controlMenu.SetActive(false);
+  }
+
+  
+  public void GoToControlMenu() {
+    controlMenu.SetActive(true);
+    firstMenu.SetActive(false);
+    secondMenu.SetActive(false);
+    thirdMenu.SetActive(false);
   }
 
   public void OpenAeonSpaceSystem() {
