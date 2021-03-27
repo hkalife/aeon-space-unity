@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject rightLaserPosition;
 
-    [SerializeField]
-    private int playerHealth;
+    public int playerHealth;
 
     public HealthBar healthBar;
 

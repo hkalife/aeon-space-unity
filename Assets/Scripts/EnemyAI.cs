@@ -37,11 +37,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private GameObject explosionEffect;
 
+    private GameObject canvas;
+
     // Start is called before the first frame update
     void Start()
     {
         state = State.Stop;
         player = GameObject.Find("Player Ship");
+        canvas = GameObject.Find("Canvas");
         allowAttack = true;
         enemyHealth = 100;
     }
@@ -53,8 +56,10 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+      if (!canvas.GetComponent<PauseScreen>().isGamePaused) {
         HandleStateMachine();
         ActionsStateMachine();
+      }
     }
 
     void ChasePlayer() {

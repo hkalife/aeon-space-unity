@@ -12,6 +12,12 @@ public class PauseScreen : MonoBehaviour
   [SerializeField]
   private GameObject controlScreen;
 
+  [SerializeField]
+  private GameObject deathScreen;
+
+  [SerializeField]
+  private GameObject player;
+
   public bool isGamePaused;
 
   private Vector2 screenCenter;
@@ -25,6 +31,11 @@ public class PauseScreen : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    if (player.GetComponent<PlayerController>().playerHealth == 0) {
+      Time.timeScale = 0f;
+      isGamePaused = true;
+      deathScreen.SetActive(true);
+    }
     if (Input.GetKeyDown(KeyCode.Escape)) {
       isGamePaused = !isGamePaused;
       if (!isGamePaused) {
@@ -55,6 +66,11 @@ public class PauseScreen : MonoBehaviour
     pauseScreen.SetActive(true);
     controlScreen.SetActive(false);
   }
+
+  public void Restart() {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+  }
+
 
   public void GoBackToGame() {
     pauseScreen.SetActive(false);
