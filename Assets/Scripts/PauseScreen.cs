@@ -12,16 +12,37 @@ public class PauseScreen : MonoBehaviour
   [SerializeField]
   private GameObject controlScreen;
 
+  public bool isGamePaused;
+
+  private Vector2 screenCenter;
+
   // Start is called before the first frame update
   void Start()
   {
+    isGamePaused = false;
   }
 
   // Update is called once per frame
   void Update()
   {
     if (Input.GetKeyDown(KeyCode.Escape)) {
-      pauseScreen.SetActive(true);
+      isGamePaused = !isGamePaused;
+      if (!isGamePaused) {
+        screenCenter.x = Screen.width * .5f;
+        screenCenter.y = Screen.height * .5f;
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+      }
+      pauseScreen.SetActive(isGamePaused);
+      if (controlScreen.activeInHierarchy) {
+        controlScreen.SetActive(isGamePaused);
+      }
+    }
+    if (pauseScreen.activeInHierarchy || controlScreen.activeInHierarchy) {
+      Time.timeScale = 0f;
+    } else {
+      Time.timeScale = 1f;
     }
   }
 
@@ -38,6 +59,12 @@ public class PauseScreen : MonoBehaviour
   public void GoBackToGame() {
     pauseScreen.SetActive(false);
     controlScreen.SetActive(false);
+
+    screenCenter.x = Screen.width * .5f;
+    screenCenter.y = Screen.height * .5f;
+
+    Cursor.lockState = CursorLockMode.Confined;
+    Cursor.visible = false;
   }
 
   public void GoToMainMenu() {

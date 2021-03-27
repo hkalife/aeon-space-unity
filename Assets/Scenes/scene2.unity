@@ -4011,6 +4011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 1296074029}
   controlScreen: {fileID: 534483029}
+  isGamePaused: 0
 --- !u!4 &509590914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2893502277384226715, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
@@ -17389,6 +17390,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2893502277384226714, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 488696456}
     - target: {fileID: 2893502277384226714, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
         type: 3}
       propertyPath: healthBar

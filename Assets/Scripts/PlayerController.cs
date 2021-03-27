@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject explosionEffect;
 
+    [SerializeField]
+    private GameObject canvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,15 +66,11 @@ public class PlayerController : MonoBehaviour
     void Update() {
         CheckLife();
         //call laser control
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused) {
             GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
             GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
             newLeftLaser.SetActive(true);
             newRightLaser.SetActive(true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-             Application.Quit();
         }
     }
 
