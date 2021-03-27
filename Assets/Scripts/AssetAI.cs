@@ -14,7 +14,6 @@ public class AssetAI : MonoBehaviour
   }
 
   void OnCollisionEnter(Collision col) {
-    Debug.Log(col.gameObject.name);
     if (col.gameObject.name == "Player Ship") {
       stateManager.GetComponent<CurrentState>().remainingAssets -= 1;
       if (stateManager.GetComponent<CurrentState>().remainingAssets == 0) {

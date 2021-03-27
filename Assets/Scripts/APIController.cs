@@ -33,6 +33,10 @@ public class APIController : MonoBehaviour
 
   private string userId;
 
+  public string username;
+
+  public int globalScore;
+
   IEnumerator GetCurrentUser(string email) {
 
     string userURL = baseURL + "/users/getByEmail/" + email;
@@ -50,6 +54,8 @@ public class APIController : MonoBehaviour
 
     JSONNode userInfo = JSON.Parse(userInfoRequest.downloadHandler.text);
     userId = userInfo[0]["id"];
+    username = userInfo[0]["username"];
+    globalScore = userInfo[0]["global_score"];
     Championship[] listPlayerChampionships = new Championship[userInfo[0]["current_championships"].Count];
 
     // Debug.Log(userInfo[0]["current_championships"].Count);
@@ -84,14 +90,18 @@ public class APIController : MonoBehaviour
       Debug.Log("STATE: " + listPlayerChampionships[i].State); */
     }
 
-    dropdownChampionships.ClearOptions();
+    if (dropdownChampionships != null) {
+      dropdownChampionships.ClearOptions();
+    }
     List<TMPro.TMP_Dropdown.OptionData> championshipItems = new List<TMPro.TMP_Dropdown.OptionData>();
     foreach (var championship in listPlayerChampionships) {
       var champOption = new TMPro.TMP_Dropdown.OptionData(championship.ChampionshipName);
       championshipItems.Add(champOption);
     }
 
-    dropdownChampionships.AddOptions(championshipItems);
+    if (dropdownChampionships != null) {
+      dropdownChampionships.AddOptions(championshipItems);
+    }
 
     //Debug.Log(listPlayerChampionships);
 

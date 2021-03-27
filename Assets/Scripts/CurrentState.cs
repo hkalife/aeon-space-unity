@@ -168,6 +168,7 @@ public class CurrentState : MonoBehaviour
       Vector3 stationPosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(400.0f, 500.0f), Random.Range(745.0f, 4150.0f));
       GameObject newAsset = Instantiate(assetItem, stationPosition, stationRotation);
     }
+    GenerateEnemies(35);
   }
 
   void CreateBaseObjective() {

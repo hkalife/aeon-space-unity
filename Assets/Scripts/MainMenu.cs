@@ -18,6 +18,13 @@ public class MainMenu : MonoBehaviour
 
   public TMP_Text warningLoginText;
 
+  public TMP_Text userMessage;
+
+  public TMP_Text scoreMessage;
+
+  private string username = "";
+
+  private int globalScore;
 
   public void PlayGame() {
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -26,6 +33,14 @@ public class MainMenu : MonoBehaviour
   void Update() {
     if (firstMenu.activeInHierarchy) {
       warningLoginText.text = "";
+    }
+    if (gameObject.name == "ThirdMenu") {
+      username = gameObject.GetComponent<APIController>().username;
+      globalScore = gameObject.GetComponent<APIController>().globalScore;
+      if (username != "") {
+        userMessage.text = "Olá, " + username + "!";
+        scoreMessage.text = "Sua pontuação global: " + globalScore.ToString() + " Aeons";
+      }
     }
   }
 
