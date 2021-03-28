@@ -66,10 +66,16 @@ public class CurrentState : MonoBehaviour
   private TMP_Text titleRemainingNumber;
 
   [SerializeField]
+  private TMP_Text messageCrate;
+
+  [SerializeField]
   private GameObject station;
 
   [SerializeField]
   private GameObject assetItem;
+
+  [SerializeField]
+  private GameObject collectable;
 
   private int minutes = 2;
 
@@ -97,7 +103,19 @@ public class CurrentState : MonoBehaviour
     MountScene(currentScenario);
   }
 
+  public void CallClean() {
+    StartCoroutine(CleanAssetTextAfterSomeTime());
+  }
+
+  public IEnumerator CleanAssetTextAfterSomeTime() {
+    Debug.Log("chamou coroutine");
+    yield return new WaitForSeconds(3f);
+    messageCrate.text = "";
+    Debug.Log("chegou no fim");
+  }
+
   void MountScene(string scenario) {
+    CreateCollectables();
     if (scenario == "Space") {
       RenderSettings.skybox = spaceSkyboxMaterial;
       spaceScenario.SetActive(true);
@@ -113,6 +131,14 @@ public class CurrentState : MonoBehaviour
       spaceScenario.SetActive(false);
       desertScenario.SetActive(false);
       iceScenario.SetActive(true);
+    }
+  }
+
+  void CreateCollectables() {
+    for (int i = 0; i < 10 ; i++) {
+      Vector3 newCollectablePosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(400.0f, 600.0f), Random.Range(745.0f, 4150.0f));
+      GameObject newCollectable = Instantiate(collectable, newCollectablePosition, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+      newCollectable.SetActive(true);
     }
   }
 
@@ -196,7 +222,7 @@ public class CurrentState : MonoBehaviour
 
   void GenerateEnemies(int amountOfEnemies) {
     for (int i = 0; i < amountOfEnemies ; i++) {
-      Vector3 newEnemyPosition = new Vector3(Random.Range(-680.0f, 4700.0f), Random.Range(250.0f, 600.0f), Random.Range(124.0f, 4200.0f));
+      Vector3 newEnemyPosition = new Vector3(Random.Range(680.0f, 4700.0f), Random.Range(250.0f, 600.0f), Random.Range(500.0f, 4200.0f));
       Quaternion newEnemyRotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), Random.Range(-30.0f, 30.0f));
       GameObject newEnemy = Instantiate(enemy, newEnemyPosition, newEnemyRotation);
       newEnemy.SetActive(true);

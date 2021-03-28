@@ -31,7 +31,7 @@ public class PauseScreen : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if (player.GetComponent<PlayerController>().playerHealth == 0) {
+    if (player.GetComponent<PlayerController>().playerHealth <= 0) {
       Time.timeScale = 0f;
       isGamePaused = true;
       deathScreen.SetActive(true);

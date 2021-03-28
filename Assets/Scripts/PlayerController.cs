@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
 
     public int playerScore;
+
+    public int missileQuantity;
     
     [SerializeField]
     private TextMeshProUGUI scoreText;
@@ -46,6 +48,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject canvas;
 
+    [SerializeField]
+    private TMP_Text missileQuantityText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +61,8 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         playerHealth = 100;
+        missileQuantity = 2;
+        missileQuantityText.text = "x" + missileQuantity.ToString();
         healthBar.SetMaxHealth(100);
         playerScore = 0;
 				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
@@ -70,6 +77,13 @@ public class PlayerController : MonoBehaviour
             GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
             newLeftLaser.SetActive(true);
             newRightLaser.SetActive(true);
+        }
+    }
+
+    void OnCollisionEnter(Collision col) {
+        if (col.gameObject.tag == "Terrain" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Station") {
+          playerHealth -= 100;
+          healthBar.SetHealth(playerHealth);
         }
     }
 
