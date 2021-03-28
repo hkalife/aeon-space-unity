@@ -35,7 +35,7 @@ public class LaserController : MonoBehaviour
         if (tagObject == "Enemy") {
             GameObject parent = col.gameObject.transform.parent.gameObject.transform.parent.gameObject;
             EnemyAI scriptEnemy = parent.gameObject.GetComponent<EnemyAI>();
-            scriptEnemy.DamageForEnemy();
+            scriptEnemy.DamageForEnemy("Laser");
         } else if (player != null && tagObject == "Player") {
             PlayerController scriptPlayer = player.GetComponent<PlayerController>();
             scriptPlayer.DamageForPlayer();

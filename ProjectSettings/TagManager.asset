@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Station
   - Terrain
+  - Missile
   layers:
   - Default
   - TransparentFX

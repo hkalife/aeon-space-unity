@@ -28,6 +28,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject rightLaserPosition;
 
+    [SerializeField]
+    private GameObject missile;
+
+    [SerializeField]
+    private GameObject missilePosition;
+
     public int playerHealth;
 
     public HealthBar healthBar;
@@ -73,10 +79,15 @@ public class PlayerController : MonoBehaviour
         CheckLife();
         //call laser control
         if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused) {
-            GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
-            GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
-            newLeftLaser.SetActive(true);
-            newRightLaser.SetActive(true);
+          GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
+          GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
+          newLeftLaser.SetActive(true);
+          newRightLaser.SetActive(true);
+        } else if (Input.GetMouseButtonDown(1) && !canvas.GetComponent<PauseScreen>().isGamePaused && missileQuantity > 0) {
+          GameObject newMissile = Instantiate(missile, missilePosition.transform.position, missilePosition.transform.rotation);
+          newMissile.SetActive(true);
+          missileQuantity--;
+          missileQuantityText.text = "x" + missileQuantity.ToString();
         }
     }
 

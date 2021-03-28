@@ -124,8 +124,12 @@ public class EnemyAI : MonoBehaviour
         allowAttack = true;
     }
 
-    public void DamageForEnemy() {
+    public void DamageForEnemy(string origin) {
+      if (origin == "Laser") {
         enemyHealth -= 50;
+      } else if (origin == "Missile") {
+        enemyHealth -= 100;
+      }
     }
 
     public void IdleMovement() {

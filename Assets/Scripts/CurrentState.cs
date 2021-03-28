@@ -144,7 +144,7 @@ public class CurrentState : MonoBehaviour
 
   void DefineObjective() {
     currentObjective = objectives[Random.Range(0, objectives.Length)];
-    //currentObjective = "Assets";
+    currentObjective = "Base";
     StartCoroutine(DefineTextForScreen(currentObjective));
     MountRandomObjectives(currentObjective);
   }

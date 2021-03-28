@@ -22181,12 +22181,18 @@ MonoBehaviour:
   rightLaser: {fileID: 667249177}
   leftLaserPosition: {fileID: 1691314165}
   rightLaserPosition: {fileID: 810981192}
+  missile: {fileID: 0}
+  missilePosition: {fileID: 0}
   playerHealth: 0
   healthBar: {fileID: 0}
   playerScore: 0
+  missileQuantity: 0
   scoreText: {fileID: 0}
+  stateManager: {fileID: 0}
   explosionEffect: {fileID: 1000011797152326, guid: a8081d35bc959df4dadac7b06b8b51b3,
     type: 3}
+  canvas: {fileID: 0}
+  missileQuantityText: {fileID: 0}
 --- !u!65 &1133917940
 BoxCollider:
   m_ObjectHideFlags: 0
