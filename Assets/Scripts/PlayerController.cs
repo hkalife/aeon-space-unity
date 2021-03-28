@@ -6,144 +6,166 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    public float forwardSpeed = 25f, strafeSpeed = 7.5f, hoverSpeed = 5f;
-    private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
-    private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
+  public float forwardSpeed = 25f, strafeSpeed = 7.5f, hoverSpeed = 5f;
+  private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
+  private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
 
-    public float lookRateSpeed = 90f;
-    private Vector2 lookInput, screenCenter, mouseDistance;
+  public float lookRateSpeed = 90f;
+  private Vector2 lookInput, screenCenter, mouseDistance;
 
-    private float rollInput;
-    public float rollSpeed = 90f, rollAcceleration = 3.5f;
+  private float rollInput;
+  public float rollSpeed = 90f, rollAcceleration = 3.5f;
 
-    [SerializeField]
-    private GameObject leftLaser;
+  private bool isTurboAvailable;
 
-    [SerializeField]
-    private GameObject rightLaser;
+  [SerializeField]
+  private GameObject leftLaser;
 
-    [SerializeField]
-    private GameObject leftLaserPosition;
+  [SerializeField]
+  private GameObject rightLaser;
 
-    [SerializeField]
-    private GameObject rightLaserPosition;
+  [SerializeField]
+  private GameObject leftLaserPosition;
 
-    [SerializeField]
-    private GameObject missile;
+  [SerializeField]
+  private GameObject rightLaserPosition;
 
-    [SerializeField]
-    private GameObject missilePosition;
+  [SerializeField]
+  private GameObject missile;
 
-    public int playerHealth;
+  [SerializeField]
+  private GameObject missilePosition;
 
-    public HealthBar healthBar;
+  public int playerHealth;
 
-    public int playerScore;
+  public HealthBar healthBar;
 
-    public int missileQuantity;
-    
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
+  public int playerScore;
 
-    [SerializeField]
-    private GameObject stateManager;
+  public int missileQuantity;
+  
+  [SerializeField]
+  private TextMeshProUGUI scoreText;
 
-    [SerializeField]
-    private GameObject explosionEffect;
+  [SerializeField]
+  private GameObject stateManager;
 
-    [SerializeField]
-    private GameObject canvas;
+  [SerializeField]
+  private GameObject explosionEffect;
 
-    [SerializeField]
-    private TMP_Text missileQuantityText;
+  [SerializeField]
+  private GameObject canvas;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        screenCenter.x = Screen.width * .5f;
-        screenCenter.y = Screen.height * .5f;
+  [SerializeField]
+  private TMP_Text missileQuantityText;
 
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+  [SerializeField]
+  private TMP_Text textTurboAvailable;
 
-        playerHealth = 100;
-        missileQuantity = 2;
-        missileQuantityText.text = "x" + missileQuantity.ToString();
-        healthBar.SetMaxHealth(100);
-        playerScore = 0;
-				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
-        scoreText.text = playerScore.ToString();
+  // Start is called before the first frame update
+  void Start()
+  {
+    screenCenter.x = Screen.width * .5f;
+    screenCenter.y = Screen.height * .5f;
+
+    Cursor.lockState = CursorLockMode.Confined;
+    Cursor.visible = false;
+
+    playerHealth = 100;
+    missileQuantity = 2;
+    missileQuantityText.text = "x" + missileQuantity.ToString();
+    healthBar.SetMaxHealth(100);
+    playerScore = 0;
+		stateManager.GetComponent<CurrentState>().SetScore(playerScore);
+    scoreText.text = playerScore.ToString();
+    isTurboAvailable = true;
+    textTurboAvailable.text = "Turbo disponível";
+  }
+
+  void Update() {
+    CheckLife();
+    //call laser control
+    if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused) {
+      GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
+      GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
+      newLeftLaser.SetActive(true);
+      newRightLaser.SetActive(true);
+    } else if (Input.GetMouseButtonDown(1) && !canvas.GetComponent<PauseScreen>().isGamePaused && missileQuantity > 0) {
+      GameObject newMissile = Instantiate(missile, missilePosition.transform.position, missilePosition.transform.rotation);
+      newMissile.SetActive(true);
+      missileQuantity--;
+      missileQuantityText.text = "x" + missileQuantity.ToString();
     }
-
-    void Update() {
-        CheckLife();
-        //call laser control
-        if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused) {
-          GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
-          GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
-          newLeftLaser.SetActive(true);
-          newRightLaser.SetActive(true);
-        } else if (Input.GetMouseButtonDown(1) && !canvas.GetComponent<PauseScreen>().isGamePaused && missileQuantity > 0) {
-          GameObject newMissile = Instantiate(missile, missilePosition.transform.position, missilePosition.transform.rotation);
-          newMissile.SetActive(true);
-          missileQuantity--;
-          missileQuantityText.text = "x" + missileQuantity.ToString();
-        }
+    if (Input.GetKeyDown(KeyCode.LeftShift) && isTurboAvailable) {
+      StartCoroutine(ActivateTurbo());
     }
+  }
 
-    void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "Terrain" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Station") {
-          playerHealth -= 100;
-          healthBar.SetHealth(playerHealth);
-        }
+  IEnumerator ActivateTurbo()
+  {
+    isTurboAvailable = false;
+    textTurboAvailable.text = "";
+    forwardSpeed = 300f;
+    yield return new WaitForSeconds(2f);
+    forwardSpeed = 100f;
+    yield return new WaitForSeconds(10f);
+    isTurboAvailable = true;
+    textTurboAvailable.text = "Turbo disponível";
+  }
+
+  void OnCollisionEnter(Collision col) {
+    if (col.gameObject.tag == "Terrain" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Station") {
+      playerHealth -= 100;
+      healthBar.SetHealth(playerHealth);
     }
+  }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        lookInput.x = Input.mousePosition.x;
-        lookInput.y = Input.mousePosition.y;
+  // Update is called once per frame
+  void FixedUpdate()
+  {
+    lookInput.x = Input.mousePosition.x;
+    lookInput.y = Input.mousePosition.y;
 
-        mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.y;
-        mouseDistance.y = (lookInput.y - screenCenter.y) / screenCenter.y;
+    mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.y;
+    mouseDistance.y = (lookInput.y - screenCenter.y) / screenCenter.y;
 
-        mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
+    mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
 
-        rollInput = Mathf.Lerp(rollInput, Input.GetAxisRaw("Roll"), rollAcceleration * Time.deltaTime);
+    rollInput = Mathf.Lerp(rollInput, Input.GetAxisRaw("Roll"), rollAcceleration * Time.deltaTime);
 
-        transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, rollInput * rollSpeed * Time.deltaTime, Space.Self);
+    transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, rollInput * rollSpeed * Time.deltaTime, Space.Self);
 
-        activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, Input.GetAxisRaw("Vertical") * forwardSpeed, forwardAcceleration * Time.deltaTime);
-        activeStrafeSpeed = Mathf.Lerp(activeStrafeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed, strafeAcceleration * Time.deltaTime);
-        activeHoverSpeed = Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover") * hoverSpeed, hoverAcceleration * Time.deltaTime);
+    activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, Input.GetAxisRaw("Vertical") * forwardSpeed, forwardAcceleration * Time.deltaTime);
+    activeStrafeSpeed = Mathf.Lerp(activeStrafeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed, strafeAcceleration * Time.deltaTime);
+    activeHoverSpeed = Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover") * hoverSpeed, hoverAcceleration * Time.deltaTime);
 
-        transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
-        transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
+    transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
+    transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
+  }
+
+  public void DamageForPlayer() {
+    playerHealth = playerHealth - 5;
+    healthBar.SetHealth(playerHealth);
+  }
+
+  public void AddScore() {
+    playerScore += 10;
+		stateManager.GetComponent<CurrentState>().SetScore(playerScore);
+    scoreText.text = playerScore.ToString();
+  }
+
+  public void AddStationScore() {
+    playerScore += 100;
+		stateManager.GetComponent<CurrentState>().SetScore(playerScore);
+    scoreText.text = playerScore.ToString();
+  }
+
+  public void CheckLife() {
+    if (playerHealth <= 0) {
+      GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+      explosion.transform.localScale = new Vector3(20, 20, 20);
+      gameObject.SetActive(false);
     }
-
-    public void DamageForPlayer() {
-        playerHealth = playerHealth - 5;
-        healthBar.SetHealth(playerHealth);
-    }
-
-    public void AddScore() {
-        playerScore += 10;
-				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
-        scoreText.text = playerScore.ToString();
-    }
-
-    public void AddStationScore() {
-        playerScore += 100;
-				stateManager.GetComponent<CurrentState>().SetScore(playerScore);
-        scoreText.text = playerScore.ToString();
-    }
-
-    public void CheckLife() {
-        if (playerHealth <= 0) {
-            GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            explosion.transform.localScale = new Vector3(20, 20, 20);
-            gameObject.SetActive(false);
-        }
-    }
+  }
 
 }
