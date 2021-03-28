@@ -126,6 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 
+  player: {fileID: 0}
+  missileQuantityText: {fileID: 0}
+  messageCrate: {fileID: 0}
+  currentState: {fileID: 0}
 --- !u!65 &382946503022142346
 BoxCollider:
   m_ObjectHideFlags: 0

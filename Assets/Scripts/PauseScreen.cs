@@ -47,6 +47,9 @@ public class PauseScreen : MonoBehaviour
     }
     if (Input.GetKeyDown(KeyCode.Escape) && !currentState.GetComponent<CurrentState>().gameFinished) {
       isGamePaused = !isGamePaused;
+      Time.timeScale = 0f;
+      Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
       if (!isGamePaused) {
         screenCenter.x = Screen.width * .5f;
         screenCenter.y = Screen.height * .5f;

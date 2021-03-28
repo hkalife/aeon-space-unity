@@ -228,7 +228,7 @@ public class CurrentState : MonoBehaviour
 
   void GenerateEnemies(int amountOfEnemies) {
     for (int i = 0; i < amountOfEnemies ; i++) {
-      Vector3 newEnemyPosition = new Vector3(Random.Range(680.0f, 4700.0f), Random.Range(250.0f, 600.0f), Random.Range(500.0f, 4200.0f));
+      Vector3 newEnemyPosition = new Vector3(Random.Range(850.0f, 4300.0f), Random.Range(250.0f, 400.0f), Random.Range(700.0f, 4200.0f));
       Quaternion newEnemyRotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), Random.Range(-30.0f, 30.0f));
       GameObject newEnemy = Instantiate(enemy, newEnemyPosition, newEnemyRotation);
       newEnemy.SetActive(true);
@@ -246,18 +246,20 @@ public class CurrentState : MonoBehaviour
   IEnumerator Countdown()
   {
     while (seconds > 0 || minutes > 0) {
-      if (seconds > 0) {
-        seconds--;
-      } else {
-        seconds = 59;
-        minutes--;
+      if (!gameFinished) {
+        if (seconds > 0) {
+          seconds--;
+        } else {
+          seconds = 59;
+          minutes--;
+        }
+        string secondsToShow = seconds.ToString();
+        if (seconds < 10) {
+          secondsToShow = "0" + seconds.ToString();
+        }
+        clockText.text = "0" + minutes.ToString() + ":" + secondsToShow;
+        yield return new WaitForSeconds(1f);
       }
-      string secondsToShow = seconds.ToString();
-      if (seconds < 10) {
-        secondsToShow = "0" + seconds.ToString();
-      }
-      clockText.text = "0" + minutes.ToString() + ":" + secondsToShow;
-      yield return new WaitForSeconds(1f);
     }
     gameFinished = true;
     clockText.text = "";

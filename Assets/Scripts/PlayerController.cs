@@ -166,6 +166,9 @@ public class PlayerController : MonoBehaviour
       GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
       explosion.transform.localScale = new Vector3(20, 20, 20);
       gameObject.SetActive(false);
+      Time.timeScale = 0f;
+      Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
     }
   }
 
