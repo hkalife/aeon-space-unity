@@ -16,13 +16,11 @@ public class CurrentState : MonoBehaviour
 
   public GameObject scoreScreen;
 
-  [SerializeField]
-  private string currentScenario;
+  public string currentScenario;
 
   private string[] scenarios = {"Space", "Desert", "Ice"};
 
-  [SerializeField]
-  private string currentObjective = "Deathmatch";
+  public string currentObjective;
 
   private string[] objectives = {"Deathmatch", "Assets", "Base"};
 
@@ -82,6 +80,8 @@ public class CurrentState : MonoBehaviour
 
   [SerializeField]
   private GameObject endScreenPt2;
+
+  public static string usermail;
 
   private int minutes = 2;
 

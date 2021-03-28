@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using SimpleJSON;
 using UnityEngine.UI;
 using TMPro;
@@ -38,7 +39,6 @@ public class APIController : MonoBehaviour
   public int globalScore;
 
   IEnumerator GetCurrentUser(string email) {
-
     string userURL = baseURL + "/users/getByEmail/" + email;
 
     // Debug.Log(userURL);
@@ -111,7 +111,7 @@ public class APIController : MonoBehaviour
   }
 
   void Start() {
-    StartCoroutine(GetCurrentUser("henriquekalife@gmail.com"));
+    StartCoroutine(GetCurrentUser(CurrentState.usermail));
     //scoreScreen.SetActive(false);
   }
 
@@ -145,8 +145,7 @@ public class APIController : MonoBehaviour
   }
 
   public void SendGameInfo() {
-    //StartCoroutine(UpdateScoreInChampionship());
-    StartCoroutine(UpdateScoreInUser());
+    StartCoroutine(UpdateScoreInChampionship());
   }
 
   IEnumerator UpdateScoreInChampionship() {    
@@ -159,7 +158,8 @@ public class APIController : MonoBehaviour
       }
     }
 
-    string url = "http://localhost:3000/championships/updatechampionshipscore/"+ championshipId + "&" + userId + "&" + 321;
+    GameObject player = GameObject.Find("Player Ship");
+    string url = "http://localhost:3000/championships/updatechampionshipscore/"+ championshipId + "&" + userId + "&" + player.GetComponent<PlayerController>().playerScore.ToString();
 
     UnityWebRequest www = UnityWebRequest.Post(url, formData);
     yield return www.SendWebRequest();
@@ -168,6 +168,8 @@ public class APIController : MonoBehaviour
       Debug.LogError(www.error);
       yield break;
     }
+
+    StartCoroutine(UpdateScoreInUser());
   }
 
   IEnumerator UpdateScoreInUser() {
@@ -180,7 +182,12 @@ public class APIController : MonoBehaviour
       }
     }
 
-    string url = "http://localhost:3000/users/updateplayerscore/"+ championshipId + "&" + userId + "&" + 100 + "&" + "deathmatch" + "&" + "space";
+    GameObject player = GameObject.Find("Player Ship");
+    GameObject state = GameObject.Find("StateManager");
+    string url = "http://localhost:3000/users/updateplayerscore/" + championshipId + "&" + userId
+    + "&" + player.GetComponent<PlayerController>().playerScore.ToString()
+    + "&" + state.GetComponent<CurrentState>().currentObjective
+    + "&" + state.GetComponent<CurrentState>().currentScenario;
 
     UnityWebRequest www = UnityWebRequest.Post(url, formData);
     yield return www.SendWebRequest();
@@ -189,5 +196,7 @@ public class APIController : MonoBehaviour
       Debug.LogError(www.error);
       yield break;
     }
+
+    SceneManager.LoadScene(0);
   }
 }

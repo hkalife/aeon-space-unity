@@ -84,6 +84,8 @@ public class AuthManager : MonoBehaviour {
       User = LoginTask.Result;
       Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
 
+      CurrentState.usermail = User.Email;
+
       MainMenu menuController = gameObject.GetComponent<MainMenu>();
       menuController.GoToThirdMenu();
 
