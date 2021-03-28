@@ -29,6 +29,8 @@ public class MainMenu : MonoBehaviour
 
   private int globalScore;
 
+  public static bool isNextGame;
+
   public void PlayGame() {
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
   }
@@ -44,6 +46,10 @@ public class MainMenu : MonoBehaviour
         userMessage.text = "Olá, " + username + "!";
         scoreMessage.text = "Sua pontuação global: " + globalScore.ToString() + " Aeons";
       }
+    }
+    if (isNextGame == true) {
+      GoToThirdMenu();
+      isNextGame = false;
     }
   }
 

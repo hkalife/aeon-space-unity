@@ -197,6 +197,7 @@ public class APIController : MonoBehaviour
       yield break;
     }
 
+    MainMenu.isNextGame = true;
     SceneManager.LoadScene(0);
   }
 }

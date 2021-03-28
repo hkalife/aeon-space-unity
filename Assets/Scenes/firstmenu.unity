@@ -1768,7 +1768,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Tecla W: Acelerador\nMouse: Dire\xE7\xE3o da nave\nMouse (Bot\xE3o esquerdo):
-    Tiro\nMouse (Bot\xE3o direito): Troca arma\nTecla Shift: Turbo\nTecla Esc: Pausa"
+    Tiro\nMouse (Bot\xE3o direito): M\xEDssil de Plasma\nTecla Shift: Turbo\nTecla
+    Esc: Pausa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
