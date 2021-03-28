@@ -22,7 +22,7 @@ public class LaserController : MonoBehaviour
     void Update()
     {
         if (this.isActiveAndEnabled) {
-            transform.position += transform.forward * Time.deltaTime * 500;
+            transform.position += transform.forward * Time.deltaTime * 750;
         }
     }
 
