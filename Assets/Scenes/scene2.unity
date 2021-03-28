@@ -1838,6 +1838,8 @@ MonoBehaviour:
   station: {fileID: 261096365}
   assetItem: {fileID: 1264141005497792, guid: 2ca7ac0292442c448bfd776e87b1608e, type: 3}
   collectable: {fileID: 8822901368416123052}
+  endScreenPt1: {fileID: 1566260579}
+  endScreenPt2: {fileID: 1569794687}
 --- !u!4 &368966374
 Transform:
   m_ObjectHideFlags: 0
@@ -7607,6 +7609,9 @@ MonoBehaviour:
   deathScreen: {fileID: 1721662932}
   player: {fileID: 341885913}
   isGamePaused: 0
+  currentState: {fileID: 368966372}
+  endScreenPt1: {fileID: 1566260579}
+  endScreenPt2: {fileID: 1569794687}
 --- !u!4 &509590914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2893502277384226715, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,

@@ -22,6 +22,15 @@ public class PauseScreen : MonoBehaviour
 
   private Vector2 screenCenter;
 
+  [SerializeField]
+  private GameObject currentState;
+
+  [SerializeField]
+  private GameObject endScreenPt1;
+
+  [SerializeField]
+  private GameObject endScreenPt2;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -36,7 +45,7 @@ public class PauseScreen : MonoBehaviour
       isGamePaused = true;
       deathScreen.SetActive(true);
     }
-    if (Input.GetKeyDown(KeyCode.Escape)) {
+    if (Input.GetKeyDown(KeyCode.Escape) && !currentState.GetComponent<CurrentState>().gameFinished) {
       isGamePaused = !isGamePaused;
       if (!isGamePaused) {
         screenCenter.x = Screen.width * .5f;
@@ -50,7 +59,7 @@ public class PauseScreen : MonoBehaviour
         controlScreen.SetActive(isGamePaused);
       }
     }
-    if (pauseScreen.activeInHierarchy || controlScreen.activeInHierarchy) {
+    if (pauseScreen.activeInHierarchy || controlScreen.activeInHierarchy || endScreenPt1.activeInHierarchy || endScreenPt2.activeInHierarchy) {
       Time.timeScale = 0f;
     } else {
       Time.timeScale = 1f;

@@ -11,17 +11,16 @@ public class StationAI : MonoBehaviour
   private GameObject explosionEffect;
 
   private GameObject player;
-
   private GameObject state;
   private GameObject canvas;
 
   // Start is called before the first frame update
   void Start()
   {
-      stationHealth = 200;
-      player = GameObject.Find("Player Ship");
-      state = GameObject.Find("StateManager");
-      canvas = GameObject.Find("Canvas");
+    stationHealth = 200;
+    player = GameObject.Find("Player Ship");
+    state = GameObject.Find("StateManager");
+    canvas = GameObject.Find("Canvas");
   }
 
   public void StationTakeDamage(string origin) {
@@ -35,20 +34,20 @@ public class StationAI : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-      if (stationHealth <= 0) {
-        PlayerController scriptPlayer = player.GetComponent<PlayerController>();
-        scriptPlayer.AddStationScore();
+    if (stationHealth <= 0) {
+      PlayerController scriptPlayer = player.GetComponent<PlayerController>();
+      scriptPlayer.AddStationScore();
 
-        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        explosion.transform.localScale = new Vector3(300, 300, 300);
+      GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+      explosion.transform.localScale = new Vector3(300, 300, 300);
 
-        state.GetComponent<CurrentState>().remainingStations -= 1;
-        if (state.GetComponent<CurrentState>().remainingStations == 0) {
-          state.GetComponent<CurrentState>().gameFinished = true;
-          canvas.GetComponent<APIController>().GoToScreen(1);
-        }
-
-        Destroy(gameObject);
+      state.GetComponent<CurrentState>().remainingStations -= 1;
+      if (state.GetComponent<CurrentState>().remainingStations == 0) {
+        state.GetComponent<CurrentState>().gameFinished = true;
+        canvas.GetComponent<APIController>().GoToScreen(1);
       }
+
+      Destroy(gameObject);
+    }
   }
 }

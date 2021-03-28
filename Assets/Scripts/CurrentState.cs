@@ -77,6 +77,12 @@ public class CurrentState : MonoBehaviour
   [SerializeField]
   private GameObject collectable;
 
+  [SerializeField]
+  private GameObject endScreenPt1;
+
+  [SerializeField]
+  private GameObject endScreenPt2;
+
   private int minutes = 2;
 
   private int seconds = 59;
@@ -96,6 +102,9 @@ public class CurrentState : MonoBehaviour
       titleRemainingNumber.text = "Restando";
       remainingNumber.text = remainingAssets.ToString();
     }
+    if (endScreenPt1.activeInHierarchy || endScreenPt2.activeInHierarchy) {
+      gameFinished = true;
+    }
   }
 
   void DefineScenario() {
@@ -108,10 +117,8 @@ public class CurrentState : MonoBehaviour
   }
 
   public IEnumerator CleanAssetTextAfterSomeTime() {
-    Debug.Log("chamou coroutine");
     yield return new WaitForSeconds(3f);
     messageCrate.text = "";
-    Debug.Log("chegou no fim");
   }
 
   void MountScene(string scenario) {
@@ -135,8 +142,8 @@ public class CurrentState : MonoBehaviour
   }
 
   void CreateCollectables() {
-    for (int i = 0; i < 10 ; i++) {
-      Vector3 newCollectablePosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(400.0f, 600.0f), Random.Range(745.0f, 4150.0f));
+    for (int i = 0; i < 30 ; i++) {
+      Vector3 newCollectablePosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(200.0f, 400.0f), Random.Range(745.0f, 4150.0f));
       GameObject newCollectable = Instantiate(collectable, newCollectablePosition, Quaternion.Euler(0.0f, 0.0f, 0.0f));
       newCollectable.SetActive(true);
     }
@@ -144,7 +151,6 @@ public class CurrentState : MonoBehaviour
 
   void DefineObjective() {
     currentObjective = objectives[Random.Range(0, objectives.Length)];
-    currentObjective = "Base";
     StartCoroutine(DefineTextForScreen(currentObjective));
     MountRandomObjectives(currentObjective);
   }
@@ -194,7 +200,7 @@ public class CurrentState : MonoBehaviour
       Vector3 stationPosition = new Vector3(Random.Range(870.0f, 4300.0f), Random.Range(400.0f, 500.0f), Random.Range(745.0f, 4150.0f));
       GameObject newAsset = Instantiate(assetItem, stationPosition, stationRotation);
     }
-    GenerateEnemies(35);
+    GenerateEnemies(50);
   }
 
   void CreateBaseObjective() {
@@ -217,7 +223,7 @@ public class CurrentState : MonoBehaviour
       newStation.SetActive(true);
     }
 
-    GenerateEnemies(25);
+    GenerateEnemies(50);
   }
 
   void GenerateEnemies(int amountOfEnemies) {
@@ -233,7 +239,7 @@ public class CurrentState : MonoBehaviour
     clockText.text = "";
     titleRemainingNumber.text = "";
     remainingNumber.text = "";
-    GenerateEnemies(50);
+    GenerateEnemies(75);
     StartCoroutine(Countdown());
   }
 

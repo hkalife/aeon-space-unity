@@ -85,12 +85,13 @@ public class PlayerController : MonoBehaviour
   void Update() {
     CheckLife();
     //call laser control
-    if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused) {
+    Debug.Log(!canvas.GetComponent<PauseScreen>().isGamePaused && !stateManager.GetComponent<CurrentState>().gameFinished);
+    if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused && !stateManager.GetComponent<CurrentState>().gameFinished) {
       GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
       GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
       newLeftLaser.SetActive(true);
       newRightLaser.SetActive(true);
-    } else if (Input.GetMouseButtonDown(1) && !canvas.GetComponent<PauseScreen>().isGamePaused && missileQuantity > 0) {
+    } else if (Input.GetMouseButtonDown(1) && (!canvas.GetComponent<PauseScreen>().isGamePaused || !stateManager.GetComponent<CurrentState>().gameFinished) && missileQuantity > 0) {
       GameObject newMissile = Instantiate(missile, missilePosition.transform.position, missilePosition.transform.rotation);
       newMissile.SetActive(true);
       missileQuantity--;
