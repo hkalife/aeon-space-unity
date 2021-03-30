@@ -11,7 +11,7 @@ using TMPro;
 public class APIController : MonoBehaviour
 {
 
-  private readonly string baseURL = "http://localhost:3000";
+  private readonly string baseURL = "https://aeon-space-backend.herokuapp.com";
 
   private Championship championship;
 
@@ -159,7 +159,7 @@ public class APIController : MonoBehaviour
     }
 
     GameObject player = GameObject.Find("Player Ship");
-    string url = "http://localhost:3000/championships/updatechampionshipscore/"+ championshipId + "&" + userId + "&" + player.GetComponent<PlayerController>().playerScore.ToString();
+    string url = "https://aeon-space-backend.herokuapp.com/championships/updatechampionshipscore/"+ championshipId + "&" + userId + "&" + player.GetComponent<PlayerController>().playerScore.ToString();
 
     UnityWebRequest www = UnityWebRequest.Post(url, formData);
     yield return www.SendWebRequest();
@@ -184,7 +184,7 @@ public class APIController : MonoBehaviour
 
     GameObject player = GameObject.Find("Player Ship");
     GameObject state = GameObject.Find("StateManager");
-    string url = "http://localhost:3000/users/updateplayerscore/" + championshipId + "&" + userId
+    string url = "https://aeon-space-backend.herokuapp.com/users/updateplayerscore/" + championshipId + "&" + userId
     + "&" + player.GetComponent<PlayerController>().playerScore.ToString()
     + "&" + state.GetComponent<CurrentState>().currentObjective
     + "&" + state.GetComponent<CurrentState>().currentScenario;
