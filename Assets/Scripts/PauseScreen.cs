@@ -87,6 +87,7 @@ public class PauseScreen : MonoBehaviour
   public void GoBackToGame() {
     pauseScreen.SetActive(false);
     controlScreen.SetActive(false);
+    gameObject.GetComponent<PauseScreen>().isGamePaused = false;
 
     screenCenter.x = Screen.width * .5f;
     screenCenter.y = Screen.height * .5f;

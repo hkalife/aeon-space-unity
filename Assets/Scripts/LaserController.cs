@@ -36,7 +36,7 @@ public class LaserController : MonoBehaviour
             GameObject parent = col.gameObject.transform.parent.gameObject.transform.parent.gameObject;
             EnemyAI scriptEnemy = parent.gameObject.GetComponent<EnemyAI>();
             scriptEnemy.DamageForEnemy("Laser");
-        } else if (player != null && tagObject == "Player") {
+        } else if (player != null && tagObject == "Player" && gameObject.name != "GroupLeftLaserPlayer(Clone)" && gameObject.name != "GroupRightLaserPlayer(Clone)") {
             PlayerController scriptPlayer = player.GetComponent<PlayerController>();
             scriptPlayer.DamageForPlayer();
         } else if (tagObject == "Station") {

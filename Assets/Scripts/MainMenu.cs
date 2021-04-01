@@ -87,6 +87,6 @@ public class MainMenu : MonoBehaviour
   }
 
   public void OpenAeonSpaceSystem() {
-    Application.OpenURL("http://unity3d.com/");
+    Application.OpenURL("https://aeonspace.netlify.app/#/");
   }
 }

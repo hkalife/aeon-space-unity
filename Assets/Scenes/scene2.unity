@@ -3337,7 +3337,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34470
+  m_Name: pb_Mesh-84334
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9553,7 +9553,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34264
+  m_Name: pb_Mesh-84340
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11349,6 +11349,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1836159879}
+    - target: {fileID: 667249177, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
+      propertyPath: m_Name
+      value: GroupRightLaserPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 667249177, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
+      propertyPath: m_TagString
+      value: Laser
+      objectReference: {fileID: 0}
     - target: {fileID: 1197668317, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -11361,6 +11369,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1836159879}
+    - target: {fileID: 1604414339, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
+      propertyPath: m_Name
+      value: GroupLeftLaserPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604414339, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
+      propertyPath: m_TagString
+      value: Laser
+      objectReference: {fileID: 0}
     - target: {fileID: 1751470840, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933, type: 3}
       propertyPath: m_Mesh
       value: 

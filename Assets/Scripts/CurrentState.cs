@@ -105,6 +105,10 @@ public class CurrentState : MonoBehaviour
     if (endScreenPt1.activeInHierarchy || endScreenPt2.activeInHierarchy) {
       gameFinished = true;
     }
+    if (gameFinished) {
+      Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
+    }
   }
 
   void DefineScenario() {
