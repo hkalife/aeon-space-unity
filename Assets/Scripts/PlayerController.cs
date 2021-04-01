@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour
   void Update() {
     CheckLife();
     //call laser control
-    Debug.Log(!canvas.GetComponent<PauseScreen>().isGamePaused && !stateManager.GetComponent<CurrentState>().gameFinished);
     if (Input.GetMouseButtonDown(0) && !canvas.GetComponent<PauseScreen>().isGamePaused && !stateManager.GetComponent<CurrentState>().gameFinished) {
       GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
       GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
@@ -151,6 +150,12 @@ public class PlayerController : MonoBehaviour
 
   public void AddScore() {
     playerScore += 10;
+		stateManager.GetComponent<CurrentState>().SetScore(playerScore);
+    scoreText.text = playerScore.ToString();
+  }
+
+  public void AddAssetScore() {
+    playerScore += 100;
 		stateManager.GetComponent<CurrentState>().SetScore(playerScore);
     scoreText.text = playerScore.ToString();
   }

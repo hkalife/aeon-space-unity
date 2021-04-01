@@ -23,14 +23,8 @@ public class APIController : MonoBehaviour
   [SerializeField]
   private GameObject scoreScreen;
 
-  //[SerializeField]
-  //private TMP_Text scoreText;
-
   [SerializeField]
   private GameObject sendScreen;
-
-  //[SerializeField]
-  //private GameObject stateManager;
 
   private string userId;
 
@@ -40,8 +34,6 @@ public class APIController : MonoBehaviour
 
   IEnumerator GetCurrentUser(string email) {
     string userURL = baseURL + "/users/getByEmail/" + email;
-
-    // Debug.Log(userURL);
 
     UnityWebRequest userInfoRequest = UnityWebRequest.Get(userURL);
 
@@ -58,8 +50,6 @@ public class APIController : MonoBehaviour
     globalScore = userInfo[0]["global_score"];
     Championship[] listPlayerChampionships = new Championship[userInfo[0]["current_championships"].Count];
 
-    // Debug.Log(userInfo[0]["current_championships"].Count);
-
     for (int i = 0; i < userInfo[0]["current_championships"].Count; i++) {
       string championshipURL = baseURL + "/championships/" + userInfo[0]["current_championships"][i]["championship_id"];
       UnityWebRequest championshipInfoRequest = UnityWebRequest.Get(championshipURL);
@@ -71,10 +61,6 @@ public class APIController : MonoBehaviour
       }
 
       JSONNode championshipInfo = JSON.Parse(championshipInfoRequest.downloadHandler.text);
-      // Debug.Log(championshipInfo);
-
-      // Debug.Log(userInfo[0]["current_championships"][i]["championship_id"]);
-      // Debug.Log(userInfo[0]["current_championships"][i]["score"]);
       listPlayerChampionships[i] = new Championship(
         userInfo[0]["current_championships"][i]["championship_id"],
         userInfo[0]["current_championships"][i]["score"],
@@ -83,11 +69,6 @@ public class APIController : MonoBehaviour
       );
 
       listChampionships = listPlayerChampionships;
-
-      /* Debug.Log("ID: " + listPlayerChampionships[i].Id);
-      Debug.Log("SCORE: " + listPlayerChampionships[i].Score);
-      Debug.Log("NAME: " + listPlayerChampionships[i].ChampionshipName);
-      Debug.Log("STATE: " + listPlayerChampionships[i].State); */
     }
 
     if (dropdownChampionships != null) {
@@ -102,33 +83,14 @@ public class APIController : MonoBehaviour
     if (dropdownChampionships != null) {
       dropdownChampionships.AddOptions(championshipItems);
     }
-
-    //Debug.Log(listPlayerChampionships);
-
-    // Debug.Log(userInfo[0]["current_championships"][1]["championship_id"]);
-    
-    // Debug.Log(userInfo);
   }
 
   void Start() {
     StartCoroutine(GetCurrentUser(CurrentState.usermail));
-    //scoreScreen.SetActive(false);
   }
 
   // Update is called once per frame
-  void Update()
-  {
-    /* if (Input.GetKeyDown(KeyCode.Escape)) {
-      StartCoroutine(GetCurrentUser("henriquekalife@gmail.com"));
-    } */
-    // Debug.Log(dropdownChampionships.value);
-    // Debug.Log(dropdownChampionships.options[dropdownChampionships.value].text);
-
-    /*if (stateManager.GetComponent<CurrentState>().gameFinished) {
-      GoToScreen(1);
-      scoreText.text = stateManager.GetComponent<CurrentState>().score.ToString();
-    }*/
-  }
+  void Update() {}
 
   public void HandleInputData(int val) {
     Debug.Log(val);
