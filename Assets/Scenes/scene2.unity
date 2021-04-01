@@ -8417,7 +8417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1499753902
 Transform:
   m_ObjectHideFlags: 0
@@ -8881,7 +8881,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25538
+  m_Name: pb_Mesh43644
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11488,6 +11488,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Collectable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403851699194007994, guid: cf4b62c0d5054d24597d60d2b4f9c3a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1403851699194301850, guid: cf4b62c0d5054d24597d60d2b4f9c3a6,
         type: 3}
